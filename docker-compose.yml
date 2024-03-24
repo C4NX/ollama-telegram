@@ -5,12 +5,16 @@ services:
     build: .
     container_name: ollama-tg
     restart: on-failure
+    networks:
+      - ollama
     env_file:
       - ./.env
   
   ollama-api:
     image: ollama/ollama:latest
     container_name: ollama-server
+    networks:
+      - ollama
     volumes:
       - ./ollama:/root/.ollama
     
@@ -28,3 +32,6 @@ services:
     restart: always
     ports:
       - '11434:11434'
+
+networks:
+  ollama:
