@@ -228,15 +228,6 @@ async def ollama_request(message: types.Message):
                     else:
                         sent_message = await bot.send_message(chat_id=message.chat.id,
                                                                 text=full_response_stripped)
-                await bot.edit_message_text(
-                    chat_id=message.chat.id,
-                    message_id=sent_message.message_id,
-                    text=md_autofixer(
-                        full_response_stripped
-                        + f"\n\nCurrent Model: `{modelname}`**\n**Generated in {response_data.get('total_duration') / 1e9:.2f}s"
-                    ),
-                    parse_mode=ParseMode.MARKDOWN_V2,
-                )
 
                 async with ACTIVE_CHATS_LOCK:
                     if ACTIVE_CHATS.get(message.from_user.id) is not None:
